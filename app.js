@@ -59,7 +59,7 @@ let charge,chargeStatus, connectivity, currentTime
 chargeStatus = "unplugged"
 
 window.onload = () => {
-  // turn_on.play();
+  turn_on.play();
   turn_on.addEventListener("ended", () => {
     setTimeout(() => {
       // autoJarvis();
@@ -245,20 +245,11 @@ function userInfo() {
 
 // speech recognition
 
-// speech lang
-
-let speech_lang = "hi-IN" // "hi-IN" | "en-US"
-if(localStorage.getItem("lang") === null){
-  localStorage.setItem("lang", "en-US")
-}
-
-
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const recognition = new SpeechRecognition();
 recognition.continuous = true;
-recognition.lang = localStorage.getItem("lang")
 
 var synth = window.speechSynthesis;
 // const speech = new SpeechSynthesisUtterance();
@@ -276,291 +267,260 @@ recognition.onresult = function (event) {
   let transcript = event.results[current][0].transcript;
   transcript = transcript.toLowerCase();
   let userData = localStorage.getItem("jarvis_setup");
-  console.log(transcript);
   // createMsg("usermsg", transcript);
   // commands
   // hi - hello
-
-  if(localStorage.getItem("lang") === "en-US"){
-    if (transcript.includes("hi jarvis")) {
-      readOut("hello sir");
+  if (transcript.includes("hi jarvis")) {
+    readOut("hello sir");
+  }
+  // some casual commands
+  if (transcript.includes("what's the current charge")) {
+    readOut(`the current charge is ${charge}`);
+  }
+  if (transcript.includes("what's the charging status")) {
+    readOut(`the current charging status is ${chargeStatus}`);
+  }
+  if (transcript.includes("current time")) {
+    readOut(currentTime);
+  }
+  if (transcript.includes("connection status")) {
+    readOut(`you are ${connectivity} sir`);
+  }
+  // jarvis commands
+  if (transcript.includes("what are your commands")) {
+    readOut("sir here's the list of commands i can follow");
+    if(window.innerWidth <= 400 ){
+      window.resizeTo(screen.width,screen.height)
     }
-
-    // change lang command
-
-    if(transcript.includes("switch to hindi")){
-      readOut("switching to hindi")
-      speech_lang = "hi-IN"
-      localStorage.setItem("lang", "hi-IN")
-      stopingR = true
-      recognition.stop()
-      location.reload()
-      readOutHindi("मैं तैयार हूँ, सर")
-    }
-  
-    // some casual commands
-    if (transcript.includes("what's the current charge")) {
-      readOut(`the current charge is ${charge}`);
-    }
-    if (transcript.includes("what's the charging status")) {
-      readOut(`the current charging status is ${chargeStatus}`);
-    }
-    if (transcript.includes("current time")) {
-      readOut(currentTime);
-    }
-    if (transcript.includes("connection status")) {
-      readOut(`you are ${connectivity} sir`);
-    }
-    // jarvis commands
-    if (transcript.includes("what are your commands")) {
-      readOut("sir here's the list of commands i can follow");
-      if(window.innerWidth <= 400 ){
-        window.resizeTo(screen.width,screen.height)
-      }
-      document.querySelector(".commands").style.display = "block";
-    }
-    // jarvis bio
-    if (transcript.includes("Tell about yourself")) {
-      readOut(
-        "sir, i am a jarvis, a voice asistant made for browsers using javascript by one of the Enthusiastic dev on the planet. I can do anything which can be done from a browser."
-      );
-    }
-  
-    // close popups
-    if (transcript.includes("close this")) {
-      readOut("closing the tab sir");
-      document.querySelector(".commands").style.display = "none";
-      if(window.innerWidth >= 401 ){
-        window.resizeTo(250,250)
-      }
-      setup.style.display = "none";
-    }
-  
-    // info change
-    if (transcript.includes("change my information")) {
-      readOut("Opening the information tab sir");
-      localStorage.clear();
-      
-      if(window.innerWidth <= 400 ){
-        window.resizeTo(screen.width,screen.height)
-      }
-      setup.style.display = "flex";
-      setup.querySelector("button").addEventListener("click", userInfo);
-    }
-  
-    
-    // weather report
-    if (
-      transcript.includes("what's the temperature")
-    ) {
-      readOut(weatherStatement);
-    }
-  
-    if (transcript.includes("full weather report")) {
-      readOut("opening the weather report sir");
-      let a = window.open(
-        `https://www.google.com/search?q=weather+in+${
-          JSON.parse(localStorage.getItem("jarvis_setup")).location
-        }`
-      );
-      windowsB.push(a)
-    }
-    // availability check
-    if (transcript.includes("are you there")) {
-      readOut("yes sir");
-    }
-    // close voice recognition
-    if (transcript.includes("shut down")) {
-      readOut("Ok sir i will take a nap");
-      stopingR = true;
-      recognition.stop();
-    }
-  
-  // whatsapp
-    if (transcript.includes("open whatsapp")) {
-      readOut("opening whatsapp");
-      let a = window.open("https://web.whatsapp.com/");
-      windowsB.push(a)
-    }
-  // netlify
-    if (transcript.includes("open netlify")) {
-      readOut("opening netlify");
-      let a = window.open("https://app.netlify.com/");
-      windowsB.push(a)
-    }
-  // spotify
-    if (transcript.includes("open spotify")) {
-      readOut("opening spotify");
-      let a = window.open("https://open.spotify.com/");
-      windowsB.push(a)
-    }
-  
-  
-    // firebase
-  
-    if (transcript.includes("open fire base") && transcript.includes("account")) {
-      readOut("opening firebase console");
-      let accId = transcript;
-      accId = accId.split("");
-      accId.pop();
-      accId = accId[accId.length - 1];
-      console.log(`accId: ${accId}`);
-      // https://console.firebase.google.com/u/0/
-      let a = window.open(`https://console.firebase.google.com/u/${accId}/`);
-      windowsB.push(a)
-    }
-  
-    // canva
-  
-    if (transcript.includes("open my canva designs")) {
-      readOut("opening canva designs");
-      window.open("https://www.canva.com/folder/all-designs");
-    }
-  
-    if (transcript.includes("open canva") || transcript.includes("open camera")) {
-      readOut("opening canva");
-      window.open("https://www.google.com/");
-    }
-  
-    // userdata access commands
-  
-    if (transcript.includes("what's my name")) {
-      readOut(`Sir, I know that you are ${JSON.parse(userData).name}`);
-    }
-    if (transcript.includes("what's my bio")) {
-      readOut(`Sir, I know that you are ${JSON.parse(userData).bio}`);
-    }
-  
-    // google
-  
-    if (transcript.includes("open google")) {
-      readOut("opening google");
-      let a = window.open("https://www.google.com/");
-      windowsB.push(a)
-    }
-  
-    if (transcript.includes("search for")) {
-      readOut("here's your result");
-      let input = transcript.split("");
-      input.splice(0, 11);
-      input.pop();
-      input = input.join("").split(" ").join("+");
-      let a = window.open(`https://www.google.com/search?q=${input}`);
-      windowsB.push(a)
-    }
-  
-    // youtube
-    if (transcript.includes("open youtube")) {
-      readOut("opening youtube sir");
-      let a = window.open("https://www.youtube.com/");
-      windowsB.push(a)
-    }
-  
-    if (transcript.includes("play")) {
-      let playStr = transcript.split("");
-      playStr.splice(0, 5);
-      let videoName = playStr.join("");
-      playStr = playStr.join("").split(" ").join("+");
-      readOut(`searching youtube for ${videoName}`);
-      let a = window.open(`https://www.youtube.com/search?q=${playStr}`
-      );
-      windowsB.push(a)
-    }
-  
-  
-    // instagram
-    if (transcript.includes("open instagram")) {
-      readOut("opening instagram sir");
-      let a =window.open("https://www.instagram.com");
-      windowsB.push(a)
-    }
-    if (transcript.includes("open my instagram profile")) {
-      if (JSON.parse(userData).instagram) {
-        readOut("opening your instagram profile");
-        let a =window.open(
-          `https://www.instagram.com/${JSON.parse(userData).instagram}/`
-        );
-        windowsB.push(a)
-      } else {
-        readOut("sir i didn't found your instagram information");
-      }
-    }
-    // twitter
-    if (transcript.includes("open my twitter profile")) {
-      readOut("opening your twitter profile");
-      let a=window.open(`https://twitter.com/${JSON.parse(userData).twitter}`);
-      windowsB.push(a)
-    }
-    if (transcript.includes("open twitter")) {
-      readOut("opening twitter sir");
-      let a = window.open(`https://twitter.com/`);
-      windowsB.push(a)
-    }
-  
-    // github
-    if (transcript.includes("open my github profile")) {
-      readOut("opening your github profile");
-      let a = window.open(`https://github.com/${JSON.parse(userData).github}`);
-      windowsB.push(a)
-    }
-    if (transcript.includes("open github")) {
-      readOut("opening github");
-      let a = window.open("https://github.com/");
-      windowsB.push(a)
-    }
-    // calendar
-    if (transcript.includes("open calendar")) {
-      readOut("opening calendar");
-      let a = window.open("https://calendar.google.com/");
-      windowsB.push(a)
-    }
-    // close all opened tabs
-    if (transcript.includes("close all tabs")) {
-      readOut("closing all tabs sir")
-      windowsB.forEach((e) => {
-        e.close()
-      })
-  
-    }
-  
-    // news commands
-    if (transcript.includes("top headlines")) {
-      readOut("These are today's top headlines sir")
-      getNews()
-  
-    }
-  
-    if (transcript.includes("news regarding")) {
-      // readOut("These are today's top headlines sir")
-      let input = transcript
-      let a = input.indexOf("regarding")
-      input = input.split("")
-      input.splice(0,a+9)
-      input.shift()
-      input.pop()
-  
-      readOut(`here's some headlines on ${input.join("")}`)
-      getCategoryNews(input.join(""))
-  
-    }
-  }    
-
-  if(localStorage.getItem("lang") === "hi-IN"){
-   if(transcript.includes("हैलो जार्विस")){
-     readOutHindi("हैलो सर")
-    }
-
-    if(transcript.includes("इंग्लिश में बदलो")){
-     readOutHindi("इंग्लिश में बदल रहा हूँ")
-    speech_lang = "en-US"
-      localStorage.setItem("lang", "en-US")
-      stopingR = true
-      recognition.stop()
-      location.reload()
-      readOut("ready to go sir")
-    }
+    document.querySelector(".commands").style.display = "block";
+  }
+  // jarvis bio
+  if (transcript.includes("Tell about yourself")) {
+    readOut(
+      "sir, i am a jarvis, a voice asistant made for browsers using javascript by one of the Enthusiastic dev on the planet. I can do anything which can be done from a browser."
+    );
   }
 
+  // close popups
+  if (transcript.includes("close this")) {
+    readOut("closing the tab sir");
+    document.querySelector(".commands").style.display = "none";
+    if(window.innerWidth >= 401 ){
+      window.resizeTo(250,250)
+    }
+    setup.style.display = "none";
+  }
+
+  // info change
+  if (transcript.includes("change my information")) {
+    readOut("Opening the information tab sir");
+    localStorage.clear();
+    
+    if(window.innerWidth <= 400 ){
+      window.resizeTo(screen.width,screen.height)
+    }
+    setup.style.display = "flex";
+    setup.querySelector("button").addEventListener("click", userInfo);
+  }
+
+  
+  // weather report
+  if (
+    transcript.includes("what's the temperature")
+  ) {
+    readOut(weatherStatement);
+  }
+
+  if (transcript.includes("full weather report")) {
+    readOut("opening the weather report sir");
+    let a = window.open(
+      `https://www.google.com/search?q=weather+in+${
+        JSON.parse(localStorage.getItem("jarvis_setup")).location
+      }`
+    );
+    windowsB.push(a)
+  }
+  // availability check
+  if (transcript.includes("are you there")) {
+    readOut("yes sir");
+  }
+  // close voice recognition
+  if (transcript.includes("shut down")) {
+    readOut("Ok sir i will take a nap");
+    stopingR = true;
+    recognition.stop();
+  }
+
+// whatsapp
+  if (transcript.includes("open whatsapp")) {
+    readOut("opening whatsapp");
+    let a = window.open("https://web.whatsapp.com/");
+    windowsB.push(a)
+  }
+// netlify
+  if (transcript.includes("open netlify")) {
+    readOut("opening netlify");
+    let a = window.open("https://app.netlify.com/");
+    windowsB.push(a)
+  }
+// spotify
+  if (transcript.includes("open spotify")) {
+    readOut("opening spotify");
+    let a = window.open("https://open.spotify.com/");
+    windowsB.push(a)
+  }
+
+
+  // firebase
+
+  if (transcript.includes("open fire base") && transcript.includes("account")) {
+    readOut("opening firebase console");
+    let accId = transcript;
+    accId = accId.split("");
+    accId.pop();
+    accId = accId[accId.length - 1];
+    console.log(`accId: ${accId}`);
+    // https://console.firebase.google.com/u/0/
+    let a = window.open(`https://console.firebase.google.com/u/${accId}/`);
+    windowsB.push(a)
+  }
+
+  // canva
+
+  if (transcript.includes("open my canva designs")) {
+    readOut("opening canva designs");
+    window.open("https://www.canva.com/folder/all-designs");
+  }
+
+  if (transcript.includes("open canva") || transcript.includes("open camera")) {
+    readOut("opening canva");
+    window.open("https://www.google.com/");
+  }
+
+  // userdata access commands
+
+  if (transcript.includes("what's my name")) {
+    readOut(`Sir, I know that you are ${JSON.parse(userData).name}`);
+  }
+  if (transcript.includes("what's my bio")) {
+    readOut(`Sir, I know that you are ${JSON.parse(userData).bio}`);
+  }
+
+  // google
+
+  if (transcript.includes("open google")) {
+    readOut("opening google");
+    let a = window.open("https://www.google.com/");
+    windowsB.push(a)
+  }
+
+  if (transcript.includes("search for")) {
+    readOut("here's your result");
+    let input = transcript.split("");
+    input.splice(0, 11);
+    input.pop();
+    input = input.join("").split(" ").join("+");
+    let a = window.open(`https://www.google.com/search?q=${input}`);
+    windowsB.push(a)
+  }
+
+  // youtube
+  if (transcript.includes("open youtube")) {
+    readOut("opening youtube sir");
+    let a = window.open("https://www.youtube.com/");
+    windowsB.push(a)
+  }
+
+  if (transcript.includes("play")) {
+    let playStr = transcript.split("");
+    playStr.splice(0, 5);
+    let videoName = playStr.join("");
+    playStr = playStr.join("").split(" ").join("+");
+    readOut(`searching youtube for ${videoName}`);
+    let a = window.open(`https://www.youtube.com/search?q=${playStr}`
+    );
+    windowsB.push(a)
+  }
+
+
+  // instagram
+  if (transcript.includes("open instagram")) {
+    readOut("opening instagram sir");
+    let a =window.open("https://www.instagram.com");
+    windowsB.push(a)
+  }
+  if (transcript.includes("open my instagram profile")) {
+    if (JSON.parse(userData).instagram) {
+      readOut("opening your instagram profile");
+      let a =window.open(
+        `https://www.instagram.com/${JSON.parse(userData).instagram}/`
+      );
+      windowsB.push(a)
+    } else {
+      readOut("sir i didn't found your instagram information");
+    }
+  }
+  // twitter
+  if (transcript.includes("open my twitter profile")) {
+    readOut("opening your twitter profile");
+    let a=window.open(`https://twitter.com/${JSON.parse(userData).twitter}`);
+    windowsB.push(a)
+  }
+  if (transcript.includes("open twitter")) {
+    readOut("opening twitter sir");
+    let a = window.open(`https://twitter.com/`);
+    windowsB.push(a)
+  }
+
+  // github
+  if (transcript.includes("open my github profile")) {
+    readOut("opening your github profile");
+    let a = window.open(`https://github.com/${JSON.parse(userData).github}`);
+    windowsB.push(a)
+  }
+  if (transcript.includes("open github")) {
+    readOut("opening github");
+    let a = window.open("https://github.com/");
+    windowsB.push(a)
+  }
+  // calendar
+  if (transcript.includes("open calendar")) {
+    readOut("opening calendar");
+    let a = window.open("https://calendar.google.com/");
+    windowsB.push(a)
+  }
+  // close all opened tabs
+  if (transcript.includes("close all tabs")) {
+    readOut("closing all tabs sir")
+    windowsB.forEach((e) => {
+      e.close()
+    })
+
+  }
+
+  // translate commmands
+  if(transcript.includes("translate")){
+    // ex = translate english to hindi " translation text"
+    let x = transcript
+    x = x.split("")
+    x.pop()
+    x.splice(0,10)
+    x = x.join("")
+    x = x.split(" ")
+    console.log(x);
+    let lang1 = keyFromLangName(Languages,firstLetterCap(x[0]))
+    console.log(lang1);
+    let w = x[2]
+    w = w.split("")
+    w.pop()
+    w = w.join("")
+    let lang2 = keyFromLangName(Languages,firstLetterCap(w))
+    console.log(lang2);
+    let text = x.slice(3,x.length)
+    text = text.join("")
+    translate(text,lang1,lang2)
+    
+  }
 
 }
 
@@ -591,26 +551,29 @@ function readOut(message) {
   // createMsg("jmsg", message);
 }
 
-
-function readOutHindi(message) {
-  
+function readOutLang(message,lang) {
   const speech = new SpeechSynthesisUtterance();
+  speech.lang = lang
+  let voices = speechSynthesis.getVoices()
+  let z;
+  voices.forEach((v) => {
+    if(v.lang.includes(lang)){
+      z = v
+    }
+  })
+  speech.voice = z
   speech.text = message;
   speech.volume = 1;
-  speech.lang = "hi-IN"
+  console.log(message);
   window.speechSynthesis.speak(speech);
-  console.log("Speaking out");
+  console.log("Speaking out - translated");
   // createMsg("jmsg", message);
 }
 
 
 
-
-
 // small jarvis
 const smallJarvis = document.querySelector("#small_jarvis")
-
-
 
 smallJarvis.addEventListener("click", () => {
   window.open(`${window.location.href}`,"newWindow","menubar=true,location=true,resizable=false,scrollbars=false,width=200,height=200,top=0,left=0")
@@ -644,61 +607,137 @@ document.querySelector(".calendar").addEventListener("click", () => {
   window.open("https://calendar.google.com/")
 })
 
+// translate
 
-// news setup
+function translate(words,lang1,lang2){
 
-async function getNews(){
-  var url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=b0712dc2e5814a1bb531e6f096b3d7d3"
-  var req = new Request(url)
-  await fetch(req).then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    let arrNews = data.articles
-    arrNews.length = 10
-    let a = []
-    arrNews.forEach((e,index) => {
-      a.push(index+1)
-      a.push(".........")
-      a.push(e.title)
-      a.push(".........")
+  let x = words
+  x = x.split(" ")
+  x = x.join("%20")
+  console.log(x);
 
-    });
-    readOut(a)
-  })
+  const data = JSON.stringify({
+    "key1": "value",
+    "key2": "value"
+  });
+  
+  const xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  
+  xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === this.DONE) {
+      console.log(this.responseText);
+      let text = JSON.parse(this.responseText)
+      text = text.translated_text
+      console.log(text);
+      readOutLang(text, lang2)
+      // readOut("translation complete")
+    }
+  });
+  
+  // xhr.open("POST", "https://translo.p.rapidapi.com/translate?text=Hey%2C%20how%20are%20you%20today%3F&to=hi&from=en");
+  xhr.open("POST", `https://translo.p.rapidapi.com/translate?text=${x}?&to=${lang2}&from=${lang1}`);
+  xhr.setRequestHeader("content-type", "application/json");
+  xhr.setRequestHeader("x-rapidapi-host", "translo.p.rapidapi.com");
+  xhr.setRequestHeader("x-rapidapi-key", "ebd2857925mshcc1791ec740c585p1957c7jsn4a5a36b3b9c6");
+  
+  xhr.send(data);
 }
 
-// category news
+// translate("hello how are you")
 
-let yyyy,mm,dd
+const Languages = {
+  "af": "Afrikaans",
+  "sq": "Albanian",
+  "am": "Amharic",
+  "ar": "Arabic",
+  "hy": "Armenian",
+  "az": "Azerbaijani",
+  "bn": "Bengali",
+  "bg": "Bulgarian",
+  "ca": "Catalan",
+  "zh": "Chinese",
+  "hr": "Croatian",
+  "cs": "Czech",
+  "da": "Danish",
+  "nl": "Dutch",
+  "en": "English",
+  "et": "Estonian",
+  "fil": "Filipino",
+  "fi": "Finnish",
+  "fr": "French",
+  "ka": "Georgian",
+  "de": "German",
+  "el": "Greek",
+  "gu": "Gujarati",
+  "he": "Hebrew",
+  "hi": "Hindi",
+  "hu": "Hungarian",
+  "is": "Icelandic",
+  "id": "Indonesian",
+  "it": "Italian",
+  "ja": "Japanese",
+  "kn": "Kannada",
+  "kk": "Kazakh",
+  "km": "Khmer",
+  "ko": "Korean",
+  "ky": "Kyrgyz",
+  "lo": "Lao",
+  "lv": "Latvian",
+  "lt": "Lithuanian",
+  "mk": "Macedonian",
+  "ms": "Malay",
+  "ml": "Malayalam",
+  "mr": "Marathi",
+  "mn": "Mongolian",
+  "my": "Myanmar(Burmese)",
+  "ne": "Nepali",
+  "no": "Norwegian",
+  "fa": "Persian",
+  "pl": "Polish",
+  "pt": "Portuguese",
+  "pa": "Punjabi",
+  "ro": "Romanian",
+  "ru": "Russian",
+  "sr": "Serbian",
+  "si": "Sinhala",
+  "sk": "Slovak",
+  "sl": "Slovenian",
+  "es": "Spanish",
+  "sw": "Swahili",
+  "sv": "Swedish",
+  "ta": "Tamil",
+  "te": "Telugu",
+  "th": "Thai",
+  "tr": "Turkish",
+  "uk": "Ukrainian",
+  "uz": "Uzbek",
+  "vi": "Vietnamese",
+  "zu": "Zulu"
+}
 
-dd = date.getDate()
-mm = date.getMonth()
-yyyy = date.getFullYear()
 
-async function getCategoryNews(category){
-  var url =
-    "https://newsapi.org/v2/everything?" +
-    `q=${category}&` +
-    `from=${yyyy}-${mm}-${dd}&` +
-    "sortBy=popularity&" +
-    "apiKey=b0712dc2e5814a1bb531e6f096b3d7d3";
+function keyFromLangName(object, value) {
+  for (var prop in object) {
+      if (object.hasOwnProperty(prop)) {
+          if (object[prop] === value)
+          return prop;
+      }
+  }
+}
 
-    // https://newsapi.org/v2/everything?q=Apple&from=2021-09-19&sortBy=popularity&apiKey=API_KEY
 
-    var req = new Request(url)
+function firstLetterCap(word){
+  let a = word
+  a = a.split("")
+  let x = a[0]
+  a = a.reverse()
+  a.pop()
 
-  await fetch(req).then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    let arrNews = data.articles
-    arrNews.length = 10
-    let a = []
-    arrNews.forEach((e,index) => {
-      a.push(index+1)
-      a.push(".........")
-      a.push(e.title)
-      a.push(".........")
-    });
-    readOut(a)
-  })
+  x = x.toUpperCase()
+  a.push(x)
+  a = a.reverse()
+  a = a.join("")
+  console.log(a);
+  return a
 }

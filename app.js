@@ -1,6 +1,6 @@
 // API
-const API_KEY = "75139dc7f79c46ef9030f21ed8cf9e2b";
-const NEWS_URL = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${API_KEY}`;
+const API_KEY = "XUqNbeL275qJo01YpJdI7g99ZYwFdIVtYQr2nlB1iGLeZapX";
+const NEWS_URL = `https://api.currentsapi.services/v1/latest-news?country=in&apiKey=${API_KEY}`;
 
 // vars and elements
 const turn_on = document.querySelector("#turn_on");
@@ -523,9 +523,7 @@ recognition.onresult = function (event) {
       console.log("Data:", data); // Debugging log
 
       if (data.status === "ok") {
-        const headlines = data.articles
-          .slice(0, 5)
-          .map((article) => article.title);
+        const headlines = data.news.slice(0, 5).map((article) => article.title);
         const newsToRead = headlines.join(". ");
         readOut(newsToRead);
       } else {

@@ -270,14 +270,14 @@ recognition.onresult = function (event) {
   // createMsg("usermsg", transcript);
   // commands
   // hi - hello
-  if (transcript.includes("hi jarvis")) {
+  if (transcript.includes("hello friday")) {
     readOut("hello sir");
   }
   // some casual commands
-  if (transcript.includes("what's the current charge")) {
+  if (transcript.includes(" current charge")) {
     readOut(`the current charge is ${charge}`);
   }
-  if (transcript.includes("what's the charging status")) {
+  if (transcript.includes(" charging ")) {
     readOut(`the current charging status is ${chargeStatus}`);
   }
   if (transcript.includes("current time")) {
@@ -287,7 +287,7 @@ recognition.onresult = function (event) {
     readOut(`you are ${connectivity} sir`);
   }
   // jarvis commands
-  if (transcript.includes("what are your commands")) {
+  if (transcript.includes(" commands")) {
     readOut("sir here's the list of commands i can follow");
     if(window.innerWidth <= 400 ){
       window.resizeTo(screen.width,screen.height)
@@ -295,11 +295,12 @@ recognition.onresult = function (event) {
     document.querySelector(".commands").style.display = "block";
   }
   // jarvis bio
-  if (transcript.includes("Tell about yourself")) {
+  if (transcript.includes(" yourself")) {
     readOut(
-      "sir, i am a jarvis, a voice asistant made for browsers using javascript by one of the Enthusiastic dev on the planet. I can do anything which can be done from a browser."
+     "Sir, I am Jarvis, a voice assistant made for browsers using JavaScript by one of the most enthusiastic developers on the planet. I can do anything that can be done from a browser."
+    
     );
-  }
+}
 
   // close popups
   if (transcript.includes("close this")) {
@@ -344,6 +345,7 @@ recognition.onresult = function (event) {
   if (transcript.includes("are you there")) {
     readOut("yes sir");
   }
+
   // close voice recognition
   if (transcript.includes("shut down")) {
     readOut("Ok sir i will take a nap");
@@ -399,10 +401,10 @@ recognition.onresult = function (event) {
 
   // userdata access commands
 
-  if (transcript.includes("what's my name")) {
+  if (transcript.includes(" name")) {
     readOut(`Sir, I know that you are ${JSON.parse(userData).name}`);
   }
-  if (transcript.includes("what's my bio")) {
+  if (transcript.includes(" bio")) {
     readOut(`Sir, I know that you are ${JSON.parse(userData).bio}`);
   }
 

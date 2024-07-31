@@ -237,7 +237,6 @@ input {
 }
 
 .small_jarvis button {
-  background-color: black;
   height: 400px;
   width: 490px;
   display: flex;

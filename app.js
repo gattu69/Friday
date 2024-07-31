@@ -1,3 +1,7 @@
+// API
+const API_KEY = "75139dc7f79c46ef9030f21ed8cf9e2b";
+const NEWS_URL = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${API_KEY}`;
+
 // vars and elements
 const turn_on = document.querySelector("#turn_on");
 const jarvis_intro = document.querySelector("#j_intro");
@@ -32,6 +36,7 @@ fridayComs.push("open instagram");
 fridayComs.push("open my instagram profile");
 fridayComs.push("open github");
 fridayComs.push("open my github profile");
+fridayComs.push("read news");
 
 // youtube window
 let ytbWindow;
@@ -55,8 +60,8 @@ let secs = date.getSeconds();
 
 // this is what friday tells about weather
 let weatherStatement = "";
-let charge,chargeStatus, connectivity, currentTime
-chargeStatus = "unplugged"
+let charge, chargeStatus, connectivity, currentTime;
+chargeStatus = "unplugged";
 
 window.onload = () => {
   turn_on.play();
@@ -81,21 +86,21 @@ window.onload = () => {
 
   // internet connectivity
 
-    if(navigator.onLine){
-      document.querySelector("#internet").textContent = "online"
-      connectivity = "online"
-    } else {
-      document.querySelector("#internet").textContent = "offline"
-      connectivity = "offline"
-    }
+  if (navigator.onLine) {
+    document.querySelector("#internet").textContent = "online";
+    connectivity = "online";
+  } else {
+    document.querySelector("#internet").textContent = "offline";
+    connectivity = "offline";
+  }
 
   setInterval(() => {
-    if(navigator.onLine){
-      document.querySelector("#internet").textContent = "online"
-      connectivity = "online"
+    if (navigator.onLine) {
+      document.querySelector("#internet").textContent = "online";
+      connectivity = "online";
     } else {
-      document.querySelector("#internet").textContent = "offline"
-      connectivity = "offline"
+      document.querySelector("#internet").textContent = "offline";
+      connectivity = "offline";
     }
   }, 60000);
 
@@ -106,16 +111,16 @@ window.onload = () => {
     }, 5000);
   }
   function printBatteryStatus(batteryObject) {
-    document.querySelector("#battery").textContent = `${
-      (batteryObject.level * 100).toFixed(2)
-    }%`;
-    charge = batteryObject.level * 100
+    document.querySelector("#battery").textContent = `${(
+      batteryObject.level * 100
+    ).toFixed(2)}%`;
+    charge = batteryObject.level * 100;
     if (batteryObject.charging === true) {
       document.querySelector(".battery").style.width = "200px";
-      document.querySelector("#battery").textContent = `${
-        (batteryObject.level * 100).toFixed(2)
-      }% Charging`;
-      chargeStatus = "plugged in"
+      document.querySelector("#battery").textContent = `${(
+        batteryObject.level * 100
+      ).toFixed(2)}% Charging`;
+      chargeStatus = "plugged in";
     }
   }
 
@@ -132,18 +137,18 @@ window.onload = () => {
 function formatAMPM(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? 'pm' : 'am';
+  var ampm = hours >= 12 ? "pm" : "am";
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0'+minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + ampm;
-  currentTime = strTime
-  time.textContent = strTime
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  var strTime = hours + ":" + minutes + " " + ampm;
+  currentTime = strTime;
+  time.textContent = strTime;
 }
 
-formatAMPM(date)
+formatAMPM(date);
 setInterval(() => {
-  formatAMPM(date)
+  formatAMPM(date);
 }, 60000);
 
 // auto friday
@@ -154,17 +159,16 @@ function autoJarvis() {
   }, 1000);
 }
 
-// 
+//
 // start jarvis with btn
 document.querySelector("#start_jarvis_btn").addEventListener("click", () => {
   recognition.start();
-})
-
+});
 
 document.querySelector("#stop_jarvis_btn").addEventListener("click", () => {
   stopingR = true;
   recognition.stop();
-})
+});
 
 // show waether
 function weather(location) {
@@ -256,11 +260,11 @@ var synth = window.speechSynthesis;
 
 recognition.onstart = function () {
   console.log("voice recognition activated");
-  document.querySelector("#stop_jarvis_btn").style.display = "flex"
+  document.querySelector("#stop_jarvis_btn").style.display = "flex";
 };
 
 // arr of window
-let windowsB = []
+let windowsB = [];
 
 recognition.onresult = function (event) {
   let current = event.resultIndex;
@@ -289,25 +293,24 @@ recognition.onresult = function (event) {
   // jarvis commands
   if (transcript.includes(" commands")) {
     readOut("sir here's the list of commands i can follow");
-    if(window.innerWidth <= 400 ){
-      window.resizeTo(screen.width,screen.height)
+    if (window.innerWidth <= 400) {
+      window.resizeTo(screen.width, screen.height);
     }
     document.querySelector(".commands").style.display = "block";
   }
   // jarvis bio
   if (transcript.includes(" yourself")) {
     readOut(
-     "Sir, I am friday and created by gattu, a voice assistant made for browsers using JavaScript by one of the most enthusiastic developers on the planet. I can do anything that can be done from a browser."
-    
+      "Sir, I am friday and created by gattu, a voice assistant made for browsers using JavaScript by one of the most enthusiastic developers on the planet. I can do anything that can be done from a browser."
     );
-}
+  }
 
   // close popups
   if (transcript.includes("close this")) {
     readOut("closing the tab sir");
     document.querySelector(".commands").style.display = "none";
-    if(window.innerWidth >= 401 ){
-      window.resizeTo(250,250)
+    if (window.innerWidth >= 401) {
+      window.resizeTo(250, 250);
     }
     setup.style.display = "none";
   }
@@ -316,19 +319,16 @@ recognition.onresult = function (event) {
   if (transcript.includes(" information")) {
     readOut("Opening the information tab sir");
     localStorage.clear();
-    
-    if(window.innerWidth <= 400 ){
-      window.resizeTo(screen.width,screen.height)
+
+    if (window.innerWidth <= 400) {
+      window.resizeTo(screen.width, screen.height);
     }
     setup.style.display = "flex";
     setup.querySelector("button").addEventListener("click", userInfo);
   }
 
-  
   // weather report
-  if (
-    transcript.includes("what's the temperature")
-  ) {
+  if (transcript.includes("what's the temperature")) {
     readOut(weatherStatement);
   }
 
@@ -339,7 +339,7 @@ recognition.onresult = function (event) {
         JSON.parse(localStorage.getItem("jarvis_setup")).location
       }`
     );
-    windowsB.push(a)
+    windowsB.push(a);
   }
   // availability check
   if (transcript.includes("are you there")) {
@@ -353,25 +353,24 @@ recognition.onresult = function (event) {
     recognition.stop();
   }
 
-// whatsapp
+  // whatsapp
   if (transcript.includes("open whatsapp")) {
     readOut("opening whatsapp");
     let a = window.open("https://web.whatsapp.com/");
-    windowsB.push(a)
+    windowsB.push(a);
   }
-// netlify
+  // netlify
   if (transcript.includes("open netlify")) {
     readOut("opening netlify");
     let a = window.open("https://app.netlify.com/");
-    windowsB.push(a)
+    windowsB.push(a);
   }
-// spotify
+  // spotify
   if (transcript.includes("open spotify")) {
     readOut("opening spotify");
     let a = window.open("https://open.spotify.com/");
-    windowsB.push(a)
+    windowsB.push(a);
   }
-
 
   // firebase
 
@@ -384,7 +383,7 @@ recognition.onresult = function (event) {
     console.log(`accId: ${accId}`);
     // https://console.firebase.google.com/u/0/
     let a = window.open(`https://console.firebase.google.com/u/${accId}/`);
-    windowsB.push(a)
+    windowsB.push(a);
   }
 
   // canva
@@ -413,7 +412,7 @@ recognition.onresult = function (event) {
   if (transcript.includes("open google")) {
     readOut("opening google");
     let a = window.open("https://www.google.com/");
-    windowsB.push(a)
+    windowsB.push(a);
   }
 
   if (transcript.includes("search for")) {
@@ -423,14 +422,14 @@ recognition.onresult = function (event) {
     input.pop();
     input = input.join("").split(" ").join("+");
     let a = window.open(`https://www.google.com/search?q=${input}`);
-    windowsB.push(a)
+    windowsB.push(a);
   }
 
   // youtube
   if (transcript.includes("open youtube")) {
     readOut("opening youtube sir");
     let a = window.open("https://www.youtube.com/");
-    windowsB.push(a)
+    windowsB.push(a);
   }
 
   if (transcript.includes("play")) {
@@ -439,25 +438,23 @@ recognition.onresult = function (event) {
     let videoName = playStr.join("");
     playStr = playStr.join("").split(" ").join("+");
     readOut(`searching youtube for ${videoName}`);
-    let a = window.open(`https://www.youtube.com/search?q=${playStr}`
-    );
-    windowsB.push(a)
+    let a = window.open(`https://www.youtube.com/search?q=${playStr}`);
+    windowsB.push(a);
   }
-
 
   // instagram
   if (transcript.includes("open instagram")) {
     readOut("opening instagram sir");
-    let a =window.open("https://www.instagram.com");
-    windowsB.push(a)
+    let a = window.open("https://www.instagram.com");
+    windowsB.push(a);
   }
   if (transcript.includes("open my instagram profile")) {
     if (JSON.parse(userData).instagram) {
       readOut("opening your instagram profile");
-      let a =window.open(
+      let a = window.open(
         `https://www.instagram.com/${JSON.parse(userData).instagram}/`
       );
-      windowsB.push(a)
+      windowsB.push(a);
     } else {
       readOut("sir i didn't found your instagram information");
     }
@@ -465,69 +462,105 @@ recognition.onresult = function (event) {
   // twitter
   if (transcript.includes("open my twitter profile")) {
     readOut("opening your twitter profile");
-    let a=window.open(`https://twitter.com/${JSON.parse(userData).twitter}`);
-    windowsB.push(a)
+    let a = window.open(`https://twitter.com/${JSON.parse(userData).twitter}`);
+    windowsB.push(a);
   }
   if (transcript.includes("open twitter")) {
     readOut("opening twitter sir");
     let a = window.open(`https://twitter.com/`);
-    windowsB.push(a)
+    windowsB.push(a);
   }
 
   // github
   if (transcript.includes("open my github profile")) {
     readOut("opening your github profile");
     let a = window.open(`https://github.com/${JSON.parse(userData).github}`);
-    windowsB.push(a)
+    windowsB.push(a);
   }
   if (transcript.includes("open github")) {
     readOut("opening github");
     let a = window.open("https://github.com/");
-    windowsB.push(a)
+    windowsB.push(a);
   }
   // calendar
   if (transcript.includes("open calendar")) {
     readOut("opening calendar");
     let a = window.open("https://calendar.google.com/");
-    windowsB.push(a)
+    windowsB.push(a);
   }
+
+  // news
+  if (transcript.includes("read news")) {
+    readOut("Fetching the latest news for you.");
+    fetchAndReadNews();
+  }
+
+  // Read NEWS
+  // Function to fetch and read out news headlines
+  async function fetchAndReadNews() {
+    try {
+      const response = await fetch(NEWS_URL);
+      console.log("Response:", response); // Debugging log
+      console.log("Response status:", response.status); // Debugging log
+      console.log(
+        "Response content-type:",
+        response.headers.get("content-type")
+      ); // Debugging log
+
+      if (!response.ok) {
+        readOut("Sorry, I couldn't fetch the news at the moment.");
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Data:", data); // Debugging log
+
+      if (data.status === "ok") {
+        const headlines = data.articles
+          .slice(0, 5)
+          .map((article) => article.title);
+        const newsToRead = headlines.join(". ");
+        readOut(newsToRead);
+      } else {
+        readOut("Sorry, I couldn't fetch the news at the moment.");
+      }
+    } catch (error) {
+      console.error("Error fetching news:", error); // Debugging log
+      readOut("An error occurred while fetching the news.");
+    }
+  }
+
   // close all opened tabs
   if (transcript.includes("close all tabs")) {
-    readOut("closing all tabs sir")
+    readOut("closing all tabs sir");
     windowsB.forEach((e) => {
-      e.close()
-    })
-
+      e.close();
+    });
   }
 
   // translate commmands
-  if(transcript.includes("translate")){
+  if (transcript.includes("translate")) {
     // ex = translate english to hindi " translation text"
-    let x = transcript
-    x = x.split("")
-    x.pop()
-    x.splice(0,10)
-    x = x.join("")
-    x = x.split(" ")
+    let x = transcript;
+    x = x.split("");
+    x.pop();
+    x.splice(0, 10);
+    x = x.join("");
+    x = x.split(" ");
     console.log(x);
-    let lang1 = keyFromLangName(Languages,firstLetterCap(x[0]))
+    let lang1 = keyFromLangName(Languages, firstLetterCap(x[0]));
     console.log(lang1);
-    let w = x[2]
-    w = w.split("")
-    w.pop()
-    w = w.join("")
-    let lang2 = keyFromLangName(Languages,firstLetterCap(w))
+    let w = x[2];
+    w = w.split("");
+    w.pop();
+    w = w.join("");
+    let lang2 = keyFromLangName(Languages, firstLetterCap(w));
     console.log(lang2);
-    let text = x.slice(3,x.length)
-    text = text.join("")
-    translate(text,lang1,lang2)
-    
+    let text = x.slice(3, x.length);
+    text = text.join("");
+    translate(text, lang1, lang2);
   }
-
-}
-
-
-
+};
 
 recognition.onend = function () {
   if (stopingR === false) {
@@ -536,13 +569,11 @@ recognition.onend = function () {
     }, 500);
   } else if (stopingR === true) {
     recognition.stop();
-    document.querySelector("#stop_jarvis_btn").style.display = "none"
+    document.querySelector("#stop_jarvis_btn").style.display = "none";
   }
 };
 
 // speak out
-
-
 
 function readOut(message) {
   const speech = new SpeechSynthesisUtterance();
@@ -553,17 +584,17 @@ function readOut(message) {
   // createMsg("jmsg", message);
 }
 
-function readOutLang(message,lang) {
+function readOutLang(message, lang) {
   const speech = new SpeechSynthesisUtterance();
-  speech.lang = lang
-  let voices = speechSynthesis.getVoices()
+  speech.lang = lang;
+  let voices = speechSynthesis.getVoices();
   let z;
   voices.forEach((v) => {
-    if(v.lang.includes(lang)){
-      z = v
+    if (v.lang.includes(lang)) {
+      z = v;
     }
-  })
-  speech.voice = z
+  });
+  speech.voice = z;
   speech.text = message;
   speech.volume = 1;
   console.log(message);
@@ -572,174 +603,176 @@ function readOutLang(message,lang) {
   // createMsg("jmsg", message);
 }
 
-
-
 // small jarvis
-const smallJarvis = document.querySelector("#small_jarvis")
+const smallJarvis = document.querySelector("#small_jarvis");
 
 smallJarvis.addEventListener("click", () => {
-  window.open(`${window.location.href}`,"newWindow","menubar=true,location=true,resizable=false,scrollbars=false,width=200,height=200,top=0,left=0")
-  window.close()
-})
-
-
+  window.open(
+    `${window.location.href}`,
+    "newWindow",
+    "menubar=true,location=true,resizable=false,scrollbars=false,width=200,height=200,top=0,left=0"
+  );
+  window.close();
+});
 
 document.querySelector("#jarvis_start").addEventListener("click", () => {
-  recognition.start()
-})
+  recognition.start();
+});
 
 // calendar
 
 const lang = navigator.language;
 
 let datex = new Date();
-let dayNumber 	= date.getDate();
-let monthx 		= date.getMonth();
+let dayNumber = date.getDate();
+let monthx = date.getMonth();
 
-let dayName 	= date.toLocaleString(lang, {weekday: 'long'});
-let monthName 	= date.toLocaleString(lang, {month: 'long'});
-let year 		= date.getFullYear();
+let dayName = date.toLocaleString(lang, { weekday: "long" });
+let monthName = date.toLocaleString(lang, { month: "long" });
+let year = date.getFullYear();
 
-document.querySelector("#month").innerHTML = monthName
-document.querySelector("#day").innerHTML = dayName
-document.querySelector("#date").innerHTML = dayNumber
-document.querySelector("#year").innerHTML = year
+document.querySelector("#month").innerHTML = monthName;
+document.querySelector("#day").innerHTML = dayName;
+document.querySelector("#date").innerHTML = dayNumber;
+document.querySelector("#year").innerHTML = year;
 
 document.querySelector(".calendar").addEventListener("click", () => {
-  window.open("https://calendar.google.com/")
-})
+  window.open("https://calendar.google.com/");
+});
 
 // translate
 
-function translate(words,lang1,lang2){
-
-  let x = words
-  x = x.split(" ")
-  x = x.join("%20")
+function translate(words, lang1, lang2) {
+  let x = words;
+  x = x.split(" ");
+  x = x.join("%20");
   console.log(x);
 
   const data = JSON.stringify({
-    "key1": "value",
-    "key2": "value"
+    key1: "value",
+    key2: "value",
   });
-  
+
   const xhr = new XMLHttpRequest();
   xhr.withCredentials = true;
-  
+
   xhr.addEventListener("readystatechange", function () {
     if (this.readyState === this.DONE) {
       console.log(this.responseText);
-      let text = JSON.parse(this.responseText)
-      text = text.translated_text
+      let text = JSON.parse(this.responseText);
+      text = text.translated_text;
       console.log(text);
-      readOutLang(text, lang2)
+      readOutLang(text, lang2);
       // readOut("translation complete")
     }
   });
-  
+
   // xhr.open("POST", "https://translo.p.rapidapi.com/translate?text=Hey%2C%20how%20are%20you%20today%3F&to=hi&from=en");
-  xhr.open("POST", `https://translo.p.rapidapi.com/translate?text=${x}?&to=${lang2}&from=${lang1}`);
+  xhr.open(
+    "POST",
+    `https://translo.p.rapidapi.com/translate?text=${x}?&to=${lang2}&from=${lang1}`
+  );
   xhr.setRequestHeader("content-type", "application/json");
   xhr.setRequestHeader("x-rapidapi-host", "translo.p.rapidapi.com");
-  xhr.setRequestHeader("x-rapidapi-key", "ebd2857925mshcc1791ec740c585p1957c7jsn4a5a36b3b9c6");
-  
+  xhr.setRequestHeader(
+    "x-rapidapi-key",
+    "ebd2857925mshcc1791ec740c585p1957c7jsn4a5a36b3b9c6"
+  );
+
   xhr.send(data);
 }
 
 // translate("hello how are you")
 
 const Languages = {
-  "af": "Afrikaans",
-  "sq": "Albanian",
-  "am": "Amharic",
-  "ar": "Arabic",
-  "hy": "Armenian",
-  "az": "Azerbaijani",
-  "bn": "Bengali",
-  "bg": "Bulgarian",
-  "ca": "Catalan",
-  "zh": "Chinese",
-  "hr": "Croatian",
-  "cs": "Czech",
-  "da": "Danish",
-  "nl": "Dutch",
-  "en": "English",
-  "et": "Estonian",
-  "fil": "Filipino",
-  "fi": "Finnish",
-  "fr": "French",
-  "ka": "Georgian",
-  "de": "German",
-  "el": "Greek",
-  "gu": "Gujarati",
-  "he": "Hebrew",
-  "hi": "Hindi",
-  "hu": "Hungarian",
-  "is": "Icelandic",
-  "id": "Indonesian",
-  "it": "Italian",
-  "ja": "Japanese",
-  "kn": "Kannada",
-  "kk": "Kazakh",
-  "km": "Khmer",
-  "ko": "Korean",
-  "ky": "Kyrgyz",
-  "lo": "Lao",
-  "lv": "Latvian",
-  "lt": "Lithuanian",
-  "mk": "Macedonian",
-  "ms": "Malay",
-  "ml": "Malayalam",
-  "mr": "Marathi",
-  "mn": "Mongolian",
-  "my": "Myanmar(Burmese)",
-  "ne": "Nepali",
-  "no": "Norwegian",
-  "fa": "Persian",
-  "pl": "Polish",
-  "pt": "Portuguese",
-  "pa": "Punjabi",
-  "ro": "Romanian",
-  "ru": "Russian",
-  "sr": "Serbian",
-  "si": "Sinhala",
-  "sk": "Slovak",
-  "sl": "Slovenian",
-  "es": "Spanish",
-  "sw": "Swahili",
-  "sv": "Swedish",
-  "ta": "Tamil",
-  "te": "Telugu",
-  "th": "Thai",
-  "tr": "Turkish",
-  "uk": "Ukrainian",
-  "uz": "Uzbek",
-  "vi": "Vietnamese",
-  "zu": "Zulu"
-}
-
+  af: "Afrikaans",
+  sq: "Albanian",
+  am: "Amharic",
+  ar: "Arabic",
+  hy: "Armenian",
+  az: "Azerbaijani",
+  bn: "Bengali",
+  bg: "Bulgarian",
+  ca: "Catalan",
+  zh: "Chinese",
+  hr: "Croatian",
+  cs: "Czech",
+  da: "Danish",
+  nl: "Dutch",
+  en: "English",
+  et: "Estonian",
+  fil: "Filipino",
+  fi: "Finnish",
+  fr: "French",
+  ka: "Georgian",
+  de: "German",
+  el: "Greek",
+  gu: "Gujarati",
+  he: "Hebrew",
+  hi: "Hindi",
+  hu: "Hungarian",
+  is: "Icelandic",
+  id: "Indonesian",
+  it: "Italian",
+  ja: "Japanese",
+  kn: "Kannada",
+  kk: "Kazakh",
+  km: "Khmer",
+  ko: "Korean",
+  ky: "Kyrgyz",
+  lo: "Lao",
+  lv: "Latvian",
+  lt: "Lithuanian",
+  mk: "Macedonian",
+  ms: "Malay",
+  ml: "Malayalam",
+  mr: "Marathi",
+  mn: "Mongolian",
+  my: "Myanmar(Burmese)",
+  ne: "Nepali",
+  no: "Norwegian",
+  fa: "Persian",
+  pl: "Polish",
+  pt: "Portuguese",
+  pa: "Punjabi",
+  ro: "Romanian",
+  ru: "Russian",
+  sr: "Serbian",
+  si: "Sinhala",
+  sk: "Slovak",
+  sl: "Slovenian",
+  es: "Spanish",
+  sw: "Swahili",
+  sv: "Swedish",
+  ta: "Tamil",
+  te: "Telugu",
+  th: "Thai",
+  tr: "Turkish",
+  uk: "Ukrainian",
+  uz: "Uzbek",
+  vi: "Vietnamese",
+  zu: "Zulu",
+};
 
 function keyFromLangName(object, value) {
   for (var prop in object) {
-      if (object.hasOwnProperty(prop)) {
-          if (object[prop] === value)
-          return prop;
-      }
+    if (object.hasOwnProperty(prop)) {
+      if (object[prop] === value) return prop;
+    }
   }
 }
 
+function firstLetterCap(word) {
+  let a = word;
+  a = a.split("");
+  let x = a[0];
+  a = a.reverse();
+  a.pop();
 
-function firstLetterCap(word){
-  let a = word
-  a = a.split("")
-  let x = a[0]
-  a = a.reverse()
-  a.pop()
-
-  x = x.toUpperCase()
-  a.push(x)
-  a = a.reverse()
-  a = a.join("")
+  x = x.toUpperCase();
+  a.push(x);
+  a = a.reverse();
+  a = a.join("");
   console.log(a);
-  return a
+  return a;
 }

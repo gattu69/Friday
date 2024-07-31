@@ -523,9 +523,20 @@ recognition.onresult = function (event) {
       console.log("Data:", data); // Debugging log
 
       if (data.status === "ok") {
-        const headlines = data.news.slice(0, 5).map((article) => article.title);
-        const newsToRead = headlines.join(". ");
-        readOut(newsToRead);
+        const headlines = data.news
+          .slice(0, 3)
+          .map((article, index) => article.title);
+        const prefixes = ["1st:", "2nd:", "3rd:"];
+
+        // Function to read headlines with prefixes
+        function readHeadlines(headlines, prefixes) {
+          headlines.forEach((headline, index) => {
+            readOut(`${prefixes[index]} ${headline}`);
+          });
+        }
+
+        // Read headlines with prefixes
+        readHeadlines(headlines, prefixes);
       } else {
         readOut("Sorry, I couldn't fetch the news at the moment.");
       }

@@ -297,7 +297,7 @@ recognition.onresult = function (event) {
   // jarvis bio
   if (transcript.includes(" yourself")) {
     readOut(
-     "Sir, I am Jarvis, a voice assistant made for browsers using JavaScript by one of the most enthusiastic developers on the planet. I can do anything that can be done from a browser."
+     "Sir, I am friday and created by gattu, a voice assistant made for browsers using JavaScript by one of the most enthusiastic developers on the planet. I can do anything that can be done from a browser."
     
     );
 }
@@ -313,7 +313,7 @@ recognition.onresult = function (event) {
   }
 
   // info change
-  if (transcript.includes("change my information")) {
+  if (transcript.includes(" information")) {
     readOut("Opening the information tab sir");
     localStorage.clear();
     

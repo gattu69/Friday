@@ -497,17 +497,12 @@ recognition.onresult = function (event) {
 
   // Read NEWS
   // Function to fetch and read out news headlines
-  // Function to fetch and read out news headlines
   async function fetchAndReadNews() {
     try {
       const response = await fetch(NEWS_URL, {
-        method: "GET", // Use GET method
+        method: "GET",
         mode: "cors", // Ensure CORS mode
         cache: "no-cache", // No cache to ensure fresh request
-        headers: {
-          "Content-Type": "application/json",
-          "Upgrade-Insecure-Requests": "1", // Try upgrading the request if required
-        },
       });
 
       console.log("Response:", response); // Debugging log
@@ -518,6 +513,8 @@ recognition.onresult = function (event) {
       ); // Debugging log
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.log("Error response text:", errorText);
         readOut("Sorry, I couldn't fetch the news at the moment.");
         return;
       }
@@ -527,7 +524,7 @@ recognition.onresult = function (event) {
 
       if (data.status === "ok") {
         const headlines = data.articles
-          .slice(0, 3)
+          .slice(0, 5)
           .map((article) => article.title);
         const newsToRead = headlines.join(". ");
         readOut(newsToRead);
@@ -540,9 +537,9 @@ recognition.onresult = function (event) {
     }
   }
 
-  // close all opened tabs
+  // Close all opened tabs
   if (transcript.includes("close all tabs")) {
-    readOut("closing all tabs sir");
+    readOut("Closing all tabs sir");
     windowsB.forEach((e) => {
       e.close();
     });

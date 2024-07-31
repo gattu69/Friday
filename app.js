@@ -37,6 +37,7 @@ fridayComs.push("open my instagram profile");
 fridayComs.push("open github");
 fridayComs.push("open my github profile");
 fridayComs.push("read news");
+fridayComs.push("close tabs");
 
 // youtube window
 let ytbWindow;
@@ -547,7 +548,7 @@ recognition.onresult = function (event) {
   }
 
   // Close all opened tabs
-  if (transcript.includes("close all tabs")) {
+  if (transcript.includes("close tabs")) {
     readOut("Closing all tabs sir");
     windowsB.forEach((e) => {
       if (e && !e.closed) {

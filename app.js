@@ -631,9 +631,8 @@ smallJarvis.addEventListener("click", () => {
   window.close();
 });
 
-document.querySelector("#jarvis_start").addEventListener("click", () => {
-  recognition.start();
-});
+// Start MIC FROM START
+recognition.start();
 
 // calendar
 

@@ -237,8 +237,9 @@ input {
 }
 
 .small_jarvis button {
-  height: 400px;
-  width: 490px;
+  width: 400px;
+  right: 10px;
+  margin-top: 200px;
   display: flex;
   justify-content: center;
   align-items: center;

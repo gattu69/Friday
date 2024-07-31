@@ -550,8 +550,11 @@ recognition.onresult = function (event) {
   if (transcript.includes("close all tabs")) {
     readOut("Closing all tabs sir");
     windowsB.forEach((e) => {
-      e.close();
+      if (e && !e.closed) {
+        e.close();
+      }
     });
+    windowsB = []; // Clear the array after closing all tabs
   }
 
   // translate commmands

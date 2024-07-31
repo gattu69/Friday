@@ -497,9 +497,19 @@ recognition.onresult = function (event) {
 
   // Read NEWS
   // Function to fetch and read out news headlines
+  // Function to fetch and read out news headlines
   async function fetchAndReadNews() {
     try {
-      const response = await fetch(NEWS_URL);
+      const response = await fetch(NEWS_URL, {
+        method: "GET", // Use GET method
+        mode: "cors", // Ensure CORS mode
+        cache: "no-cache", // No cache to ensure fresh request
+        headers: {
+          "Content-Type": "application/json",
+          "Upgrade-Insecure-Requests": "1", // Try upgrading the request if required
+        },
+      });
+
       console.log("Response:", response); // Debugging log
       console.log("Response status:", response.status); // Debugging log
       console.log(
@@ -517,7 +527,7 @@ recognition.onresult = function (event) {
 
       if (data.status === "ok") {
         const headlines = data.articles
-          .slice(0, 5)
+          .slice(0, 3)
           .map((article) => article.title);
         const newsToRead = headlines.join(". ");
         readOut(newsToRead);

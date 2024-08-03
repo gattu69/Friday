@@ -374,7 +374,7 @@ recognition.onresult = function (event) {
   }
 
   // Open and scroll reels
-  if (transcript.includes("open shorts")) {
+  if (transcript.includes("shorts")) {
     readOut("opening youtube shorts");
     let a = window.open("https://www.youtube.com/shorts/");
     windowsB.push(a);

@@ -31,11 +31,11 @@ fridayComs.push("close this youtube tab - to close opened youtube tab");
 fridayComs.push("open firebase");
 fridayComs.push("open netlify");
 fridayComs.push("open twitter");
-fridayComs.push("open my twitter profile");
+fridayComs.push("twitter profile");
 fridayComs.push("open instagram");
 fridayComs.push("instagram profile");
 fridayComs.push("open github");
-fridayComs.push("open my github profile");
+fridayComs.push("github profile");
 fridayComs.push("read news");
 fridayComs.push("close tab");
 
@@ -461,7 +461,7 @@ recognition.onresult = function (event) {
     }
   }
   // twitter
-  if (transcript.includes("open my twitter profile")) {
+  if (transcript.includes("twitter profile")) {
     readOut("opening your twitter profile");
     let a = window.open(`https://twitter.com/${JSON.parse(userData).twitter}`);
     windowsB.push(a);
@@ -473,7 +473,7 @@ recognition.onresult = function (event) {
   }
 
   // github
-  if (transcript.includes("open my github profile")) {
+  if (transcript.includes("github profile")) {
     readOut("opening your github profile");
     let a = window.open(`https://github.com/${JSON.parse(userData).github}`);
     windowsB.push(a);

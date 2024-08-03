@@ -373,6 +373,22 @@ recognition.onresult = function (event) {
     windowsB.push(a);
   }
 
+  // Open and scroll reels
+  if (transcript.includes("open shorts")) {
+    readOut("opening youtube shorts");
+    let a = window.open("https://www.youtube.com/shorts/");
+    windowsB.push(a);
+  }
+
+  // Scrolling shorts
+  if (transcript.includes("scroll")) {
+    readOut("scrolling");
+    window.scrollTo({
+      top: 500,
+      behavior: "smooth",
+    });
+  }
+
   // firebase
 
   if (transcript.includes("open fire base") && transcript.includes("account")) {

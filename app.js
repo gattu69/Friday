@@ -33,7 +33,7 @@ fridayComs.push("open netlify");
 fridayComs.push("open twitter");
 fridayComs.push("open my twitter profile");
 fridayComs.push("open instagram");
-fridayComs.push("open my instagram profile");
+fridayComs.push("instagram profile");
 fridayComs.push("open github");
 fridayComs.push("open my github profile");
 fridayComs.push("read news");
@@ -449,7 +449,7 @@ recognition.onresult = function (event) {
     let a = window.open("https://www.instagram.com");
     windowsB.push(a);
   }
-  if (transcript.includes("open my instagram profile")) {
+  if (transcript.includes("instagram profile")) {
     if (JSON.parse(userData).instagram) {
       readOut("opening your instagram profile");
       let a = window.open(

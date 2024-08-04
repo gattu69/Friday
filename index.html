@@ -5,29 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Hi I am FRIDAy" />
     <title>Ted's JARVIS</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="icon" href="./iron-pic.png" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="icon" href="./media/icon/iron-pic.png" />
   </head>
   <body>
     <div class="video-background">
       <video autoplay muted loop>
-        <source src="./3129977-hd_1920_1080_30fps.mp4" type="video/mp4" />
+        <source
+          src="./media/background/3129977-hd_1920_1080_30fps.mp4"
+          type="video/mp4" />
       </video>
     </div>
-    <audio src="./Jarvis.mp3" id="j_intro"></audio>
-    <audio src="./power up.mp3" id="turn_on"></audio>
+    <audio src="./media/audio/Jarvis.mp3" id="j_intro"></audio>
+    <audio src="./media/audio/power up.mp3" id="turn_on"></audio>
 
     <div class="machine hide_on_small">
       <div class="clock cont">
-        <img src="./clock1.png" class="icon" />
+        <img src="./media/icon/clock1.png" class="icon" />
         <p id="time"></p>
       </div>
       <div class="internet cont">
-        <img src="./internet1.png" class="icon" />
+        <img src="./media/icon/internet1.png" class="icon" />
         <p id="internet"></p>
       </div>
       <div class="battery cont">
-        <img src="./battery1.png" class="icon" />
+        <img src="./media/icon/battery1.png" class="icon" />
         <p id="battery"></p>
       </div>
       <div class="temp">
@@ -41,23 +43,27 @@
         <p id="minT"></p>
         <p id="maxT"></p>
       </div>
-      <img src="./heart.gif" id="heart" />
+      <img src="./media/icon/heart.gif" id="heart" />
       <!-- <img src="./iron_man.gif" id="iron_man" /> -->
     </div>
 
     <button id="start_jarvis_btn" class="hide_on_small">
-      <img src="./434771e3bf841e79abb2d4da70d6b1.gif" alt="start jarvis" />
+      <img
+        src="./media/icon/434771e3bf841e79abb2d4da70d6b1.gif"
+        alt="start jarvis" />
       <p>Start Recognition</p>
     </button>
 
     <button id="stop_jarvis_btn" class="hide_on_small">
-      <img src="./434771e3bf841e79abb2d4da70d6b1.gif" alt="start jarvis" />
+      <img
+        src="./media/icon/434771e3bf841e79abb2d4da70d6b1.gif"
+        alt="start jarvis" />
       <p>Stop Recognition</p>
     </button>
 
     <div class="small_jarvis hide_on_small">
       <button id="small_jarvis">
-        <img src="./iron_man.gif" height="350" />
+        <img src="./media/icon/iron_man.gif" height="350" />
         <p>Make Me Small</p>
       </button>
     </div>
@@ -89,9 +95,9 @@
     <div class="commands in_middle hide_on_small"></div>
 
     <div class="new_jarvis_window">
-      <img src="./heart.gif" height="230" id="jarvis_start" />
+      <img src="./media/icon/heart.gif" height="230" id="jarvis_start" />
     </div>
 
-    <script src="./app.js"></script>
+    <script src="./js/app.js"></script>
   </body>
 </html>
